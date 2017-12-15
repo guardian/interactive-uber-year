@@ -3,6 +3,15 @@
     list-style: none;
     margin: 0;
     padding: 0;
+    overflow: auto;
+}
+
+.uber-timeline__road {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    width: 120px;
 }
 
 .uber-timeline__event {
