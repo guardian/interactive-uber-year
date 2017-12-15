@@ -21,7 +21,7 @@ module.exports =  {
     findCurrentEvent: function() {
         $('.uber-timeline__event').each(function(i, el) {
             var position = $(el).offset().top;
-            if (position > scrollTop) {
+            if ((position + 48) > scrollTop) {
                 this.populateDay(el);
                 return false;
             }
