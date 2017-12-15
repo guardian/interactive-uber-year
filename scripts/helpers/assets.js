@@ -39,14 +39,54 @@ module.exports = {
         console.log('updated css!');
     },
 
-    html: function(path, absolutePath) {
+    html: function(path, absolutePath, data) {
         fs.removeSync(path + '/main.html');
+
+//         console.log(data);
 
         handlebars.registerHelper('if_eq', function(a, b, opts) {
             if(a == b) // Or === depending on your needs
                 return opts.fn(this);
             else
                 return opts.inverse(this);
+        });
+
+        handlebars.registerHelper('inc', function(value, options) {
+            return parseInt(value) + 1;
+        });
+
+        handlebars.registerHelper('loop', function(from, to, inc, block) {
+                block = block || {fn: function () { return arguments[0]; }};
+
+                var data = block.data || {index: null};
+
+                var output = '';
+                for (var i = from; i <= to; i += inc) {
+                    data['index'] = i;
+                    output += block.fn(i, {data: data});
+                }
+
+                return output;
+        });
+
+        handlebars.registerHelper('if_even', function(conditional, options) {
+         if((conditional % 2) == 0) {
+           return options.fn(this);
+         } else {
+           return options.inverse(this);
+         }
+        });
+
+        handlebars.registerHelper('if_odd', function(conditional, options) {
+         if((conditional % 2) !== 0) {
+           return options.fn(this);
+         } else {
+           return options.inverse(this);
+         }
+        });
+
+        handlebars.registerHelper('match-number', function(index) {
+            return (index + 2) / 2;
         });
 
         var html = fs.readFileSync('src/templates/main.html', 'utf8');
@@ -59,7 +99,7 @@ module.exports = {
             template_extensions: ['html', 'svg']
         });
 
-        fs.writeFileSync(path + '/main.html', template().replace(/@@assetPath@@/g, absolutePath));
+        fs.writeFileSync(path + '/main.html', template(data).replace(/@@assetPath@@/g, absolutePath));
         console.log('updated html!');
     },
 

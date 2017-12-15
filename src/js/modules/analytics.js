@@ -5,11 +5,11 @@ module.exports =  {
         // nothing to init
     },
 
-    trackQuestion: function(question, source) {
+    answer: function(questionNumber) {
         if (window.ga) {
             var gaTracker = window.guardian.config.googleAnalytics.trackers.editorial;
 
-            window.ga(gaTracker + '.send', 'event', 'Click', 'in page', 'trump-question-opened | ' + question + ' | ' + source, 1, {
+            window.ga(gaTracker + '.send', 'event', 'Click', 'Internal', 'Trump insulted quiz | answered ' + (questionNumber + 1), 1, {
                 nonInteraction: true
             });
         }

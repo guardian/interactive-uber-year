@@ -1,42 +1,64 @@
 var request = require('sync-request');
 var fs = require('fs-extra');
-var gridToAssets = require('../../scripts/helpers/gridToAssets.js');
+var gsjson = require('google-spreadsheet-to-json');
+var deasync = require('deasync');
+var config = require('../config.json');
+var userHome = require('user-home');
+var keys = require(userHome + '/.gu/interactives.json');
 
-var data, furniture;
+var json,
+    data = {regions: {}},
+    conferences = [];
 
-function getBoldLength(copy) {
-    if (copy.split('**').length > 1) {
-        var copyLength = copy.split('**')[1].length;
+function fetchData(callback) {
+    gsjson({
+        spreadsheetId: config.data.id,
+        allWorksheets: true,
+        credentials: keys.google
+    })
+    .then(function(result) {
+        callback(result);
+    })
+    .then(function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
 
-        if (copyLength < 10) {
-            return 'small'
-        } else if (copyLength < 20) {
-            return 'medium'
-        } else {
-            return 'large'
+function setSheetNames() {
+    data = {
+        'questions': data[0]
+    }
+}
+
+function formatAnswers() {
+    for (var i in data.questions) {
+        if (data.questions[i].text1) {
+            data.questions[i].text1 = '<span>' + data.questions[i].text1.split('.')[0] + '</span>' + data.questions[i].text1.substring(data.questions[i].text1.indexOf('.') + 1);
+        }
+        if (data.questions[i].text2) {
+            data.questions[i].text2 = '<span>' + data.questions[i].text2.split('.')[0] + '</span>' + data.questions[i].text2.substring(data.questions[i].text2.indexOf('.') + 1);
         }
     }
 }
 
-function setFurniture() {
-    data = data.sheets;
-    furniture = {}
-    for (var i = 0; i < data.furniture.length; i++) {
-        furniture[data.furniture[i].option] = data.furniture[i].value
-    }
-    data.furniture = furniture;
-}
+module.exports = function getData() {
+    var isDone = false;
 
-module.exports = function getData(explainer) {
-    if (explainer.name !== 'local') {
-        data = request('GET', explainer.data);
-        data = JSON.parse(data.getBody('utf8'));
-    } else {
-        data = require('../../scripts/local.json');
-    }
+    fetchData(function(result) {
+        data = result;
+        setSheetNames();
+        formatAnswers();
 
-    setFurniture();
-    getImages();
+        console.log(data);
+
+        isDone = true;
+    });
+
+    deasync.loopWhile(function() {
+        return !isDone;
+    });
 
     return data;
 };

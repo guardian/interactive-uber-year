@@ -1,8 +1,9 @@
-.mapped-share {
+.uber-share {
     margin: 0;
     padding: 0;
     list-style: none;
     overflow: hidden;
+    display: none;
 
     .svg {
         fill: $c-white;
@@ -12,25 +13,20 @@
     }
 }
 
-.mapped-share__button {
-    width: 30px;
-    height: 30px;
+.uber-share__button {
+    height: 40px;
+    width: 40px;
+    border-radius: 20px;
     float: left;
     margin-right: 4px;
-    border-radius: 40px;
     background-color: $c-dark-grey;
-
-    @include mq(tablet) {
-        width: 38px;
-        height: 38px;
-    }
 
     &:hover {
         background-color: darken($c-dark-grey, 5%);
     }
 }
 
-.mapped-share__button--facebook {
+.uber-share__button--facebook {
     background-color: $c-facebook;
 
     &:hover {
@@ -38,10 +34,16 @@
     }
 }
 
-.mapped-share__button--twitter {
+.uber-share__button--twitter {
     background-color: $c-twitter;
 
     &:hover {
         background-color: darken($c-twitter, 5%);
+    }
+}
+
+.uber--end {
+    .uber-share {
+        display: block;
     }
 }

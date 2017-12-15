@@ -1,11 +1,14 @@
 {
+    "data": {
+        "id": "1M-DxCz4nDhW6XkfGDongvKIXiBPI5YK16vKSTUz-OBU"
+    },
     "local": {
         "url": "http://localhost",
         "port": 8080
     },
     "remote": {
         "url": "https://interactive.guim.co.uk",
-        "path": "atoms/2017/08/mapped-trump-russia",
+        "path": "atoms/2017/12/uber-year",
         "bucket": "gdn-cdn"
     }
 }
