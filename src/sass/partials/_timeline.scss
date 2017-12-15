@@ -11,9 +11,14 @@
 
     .uber-content {
         position: relative;
+
+        @include mq($until: leftCol) {
+            margin-left: 50px;
+        }
     }
 
     p {
+        margin-top: 3px;
         margin-bottom: 18px;
     }
 
