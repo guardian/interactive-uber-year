@@ -5,6 +5,7 @@ var browserify = require('browserify');
 var stringify = require('stringify');
 var sass = require('node-sass');
 var deasync = require('deasync');
+var markdown = require('markdown').markdown;
 
 module.exports = {
     js: function(path, fileName, absolutePath) {
@@ -42,13 +43,15 @@ module.exports = {
     html: function(path, absolutePath, data) {
         fs.removeSync(path + '/main.html');
 
-//         console.log(data);
-
         handlebars.registerHelper('if_eq', function(a, b, opts) {
             if(a == b) // Or === depending on your needs
                 return opts.fn(this);
             else
                 return opts.inverse(this);
+        });
+
+        handlebars.registerHelper('marked', function(string) {
+            return markdown.toHTML(string);
         });
 
         handlebars.registerHelper('inc', function(value, options) {

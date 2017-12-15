@@ -4,14 +4,13 @@ var pageUrl = window.location.href.split('#')[0];
 
 module.exports =  {
     init: function() {
-        this.setLinks('.uber-share', 'Uber\'s bad year');
+        this.setLinks('.uber-share', 'Collision course: Uber\'s terrible 2017');
     },
 
     setLinks: function(parent, title) {
         $(parent + ' .uber-share__button--twitter a').attr('href', this.getTwitterLink(title));
         $(parent + ' .uber-share__button--facebook a').attr('href', this.getFacebookLink(title));
         $(parent + ' .uber-share__button--email a').attr('href', this.getEmailLink(title));
-        console.log( this.getTwitterLink(title));
     },
 
     getTwitterLink: function(title) {

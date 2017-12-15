@@ -1,8 +1,19 @@
 <div class='gs-container'>
     <ul class='uber-timeline'>
+
+    <div class='uber-timeline__day'>
+        <div class='uber-timeline__date-block'>
+            <span class='uber-timeline__date'></span>
+        </div>
+        <span class='uber-timeline__month'>
+        </span>
+    </div>
+
     {{#each events}}
-        <li class='uber-timeline__event'>
-            {{date}}
+        <li class='uber-timeline__event' data-date='{{ date }}' data-month='{{ month }}'>
+            <div class='uber-content'>
+                {{{ marked copy }}}
+            </div>
         </li>
     {{/each}}
     </ul>

@@ -1,0 +1,65 @@
+.uber-timeline {
+    position: relative;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.uber-timeline__event {
+    margin: 62px 0;
+}
+
+.uber-timeline__day {
+    position: absolute;
+    top: 0;
+    font-family: 'Guardian Text Sans Web';
+    font-size: 16px;
+    color: $c-black;
+
+    &.is-fixed {
+        position: fixed;
+        top: 6px;
+    }
+}
+
+.uber-timeline__date-block {
+    color: $c-white;
+    background-color: $c-black;
+    width: 36px;
+    height: 36px;
+    position: relative;
+    display: inline-block;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 10px;
+        left: -16px;
+        width: 0px;
+        height: 0px;
+        border: 8px transparent solid;
+        border-right-color: $c-black;
+    }
+}
+
+.uber-timeline__date {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    display: block;
+    text-align: center;
+}
+
+.uber-timeline__month {
+    width: 200px;
+    height: 36px;
+    padding: 6px;
+    margin-left: -2px;
+    box-sizing: border-box;
+    background-color: $c-white;
+    display: inline-block;
+    vertical-align: top;
+}
