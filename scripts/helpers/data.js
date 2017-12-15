@@ -28,7 +28,7 @@ function fetchData(callback) {
 
 function setSheetNames() {
     data = {
-        'questions': data[0]
+        'events': data[0]
     }
 }
 
@@ -49,9 +49,6 @@ module.exports = function getData() {
     fetchData(function(result) {
         data = result;
         setSheetNames();
-        formatAnswers();
-
-        console.log(data);
 
         isDone = true;
     });
