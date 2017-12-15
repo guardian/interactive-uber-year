@@ -12,15 +12,15 @@ $mq-breakpoints: (
 );
 
 // colours
-$c-blue: #69d1ca;
-$c-red: #e31f26;
+$c-blue: #4bc6df;
+$c-pale-blue: #d8e7eb;
 
 // non-colours
 $c-white: #ffffff;
 $c-off-white: #f1f1f1;
 $c-grey: #dfdfdf;
 $c-dark-grey: #999;
-$c-black: #333333;
+$c-black: #222;
 
 // social
 $c-twitter: #4bc6df;
@@ -33,3 +33,4 @@ $c-ad-grey: #f6f6f6;
 @import "partials/page";
 @import "partials/share";
 @import "partials/base";
+@import "partials/header";

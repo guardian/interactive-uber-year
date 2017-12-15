@@ -1,0 +1,43 @@
+.uber-header {
+    padding: 6px 0;
+}
+
+.uber-header__title {
+    font-family: 'Guardian Egyptian Web';
+    font-weight: 200;
+    color: $c-black;
+    font-size: 28px;
+    line-height: 1.2;
+
+    @include mq(tablet) {
+        font-size: 32px;
+        line-height: 1.1;
+    }
+
+    @include mq(desktop) {
+        font-size: 64px;
+        line-height: 1;
+    }
+}
+
+.uber-header__byline {
+    font-family: 'Guardian Text Sans Web';
+    color: $c-black;
+    font-size: 16px;
+    line-height: 1.2;
+    margin: 4px 0;
+
+    @include mq(tablet) {
+        margin: 12px 0;
+    }
+
+    a {
+        text-decoration: none;
+        border-bottom: 1px solid $c-blue;
+        color: $c-black;
+
+        &:hover {
+            color: $c-blue;
+        }
+    }
+}

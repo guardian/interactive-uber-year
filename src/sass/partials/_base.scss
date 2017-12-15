@@ -1,0 +1,16 @@
+.uber {
+    overflow: auto;
+    background: $c-pale-blue;
+}
+
+.uber-content {
+    max-width: 620px;
+
+    @include mq(leftCol) {
+        margin-left: 140px;
+    }
+
+    @include mq(wide) {
+        margin-left: 220px;
+    }
+}
