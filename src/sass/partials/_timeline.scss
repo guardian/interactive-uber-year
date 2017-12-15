@@ -12,6 +12,34 @@
     .uber-content {
         position: relative;
     }
+
+    p {
+        margin-bottom: 18px;
+    }
+
+    a {
+        color: $c-black;
+        border-bottom: 1px solid $c-blue;
+        text-decoration: none;
+
+        &:hover {
+            color: $c-blue;
+        }
+    }
+}
+
+@keyframes grow {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        transform: scale(1);
+    }
 }
 
 .uber-timeline__pip {
@@ -33,6 +61,7 @@
         top: -15px;
         border-radius: 50%;
         background-color: rgba($c-blue, 0.2);
+        animation: grow 2s linear infinite;
     }
 }
 
@@ -74,7 +103,7 @@
 }
 
 .uber-timeline__month {
-    width: 200px;
+    width: 160px;
     height: 36px;
     padding: 6px 10px;
     margin-left: -4px;
