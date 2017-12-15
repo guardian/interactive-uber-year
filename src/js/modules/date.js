@@ -2,15 +2,13 @@ var scrollTop = 0;
 
 module.exports =  {
     init: function() {
-        this.setValues();
+        this.onScroll();
         this.bindings();
     },
 
     bindings: function() {
         $(window).scroll(function() {
-            this.setValues();
-            this.findCurrentEvent();
-            this.fixDate();
+            this.onScroll();
         }.bind(this));
     },
 
@@ -18,9 +16,16 @@ module.exports =  {
         scrollTop = $(window).scrollTop();
     },
 
+    onScroll: function() {
+        this.setValues();
+        this.findCurrentEvent();
+        this.fixDate();
+    },
+
     findCurrentEvent: function() {
         $('.uber-timeline__event').each(function(i, el) {
             var position = $(el).offset().top;
+
             if ((position + 48) > scrollTop) {
                 this.populateDay(el);
                 return false;
@@ -36,7 +41,7 @@ module.exports =  {
     },
 
     fixDate: function() {
-        if (scrollTop > $('.uber-timeline').offset().top) {
+        if (scrollTop > $('.uber-timeline').offset().top - 6) {
             $('.uber-timeline__day').addClass('is-fixed');
         } else {
             $('.uber-timeline__day').removeClass('is-fixed');
