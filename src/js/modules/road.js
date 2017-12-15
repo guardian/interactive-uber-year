@@ -98,11 +98,11 @@ module.exports = {
         for (var i in ubers) {
             var uber = ubers[i];
 
-            uber.tx = path[uber.path + 1].x - uber.x;
-            uber.ty = path[uber.path + 1].y - uber.y;
+            uber.tx = path[uber.path].x - uber.x;
+            uber.ty = path[uber.path].y - uber.y;
             uber.distance = Math.sqrt(uber.tx*uber.tx + uber.ty*uber.ty);
-            uber.incrementX = (uber.tx / uber.distance) * 4;
-            uber.incrementY = (uber.ty / uber.distance) * 4;
+            uber.incrementX = (uber.tx / uber.distance) * 3;
+            uber.incrementY = (uber.ty / uber.distance) * 3;
 
             if (uber.distance < 4) {
                 uber = this.calculateUberPaths(uber);
@@ -119,12 +119,12 @@ module.exports = {
     },
 
     calculateUberPaths: function(uber) {
-//         console.log(uber);
-
         uber.path = uber.path + 1;
 
         if (uber.path > path.length - 2) {
             uber.path = 0;
+            uber.x = -200;
+            uber.y = -200;
         }
 
         return uber;
