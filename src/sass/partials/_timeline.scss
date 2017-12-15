@@ -3,7 +3,6 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    padding-top: 46px;
 }
 
 .uber-timeline__event {
@@ -13,23 +12,12 @@
     .uber-content {
         position: relative;
     }
-
-    .uber-content:before {
-        content: '';
-        position: absolute;
-        z-index: 2;
-        top: -12px;
-        left: 0;
-        width: 120px;
-        height: 2px;
-        background-color: rgba($c-black, 0.2);
-    }
 }
 
 .uber-timeline__pip {
     position: absolute;
     left: -40px;
-    top: -12px;
+    top: 13px;
     background-color: $c-blue;
     width: 8px;
     height: 8px;
@@ -49,25 +37,9 @@
 }
 
 .uber-timeline__day {
-    position: absolute;
-    z-index: 5;
-    top: 0;
     font-family: 'Guardian Text Sans Web';
     font-size: 16px;
     color: $c-black;
-
-    @include mq(leftCol) {
-        margin-left: 140px;
-    }
-
-    @include mq(wide) {
-        margin-left: 220px;
-    }
-
-    &.is-fixed {
-        position: fixed;
-        top: 6px;
-    }
 }
 
 .uber-timeline__date-block {

@@ -1,17 +1,16 @@
 <div class='gs-container'>
     <ul class='uber-timeline'>
 
-    <div class='uber-timeline__day'>
-        <div class='uber-timeline__date-block'>
-            <span class='uber-timeline__date'></span>
-        </div>
-        <span class='uber-timeline__month'>
-        </span>
-    </div>
-
     {{#each events}}
         <li class='uber-timeline__event' data-date='{{ date }}' data-month='{{ month }}'>
             <div class='uber-content'>
+                <div class='uber-timeline__day'>
+                    <div class='uber-timeline__date-block'>
+                        <span class='uber-timeline__date'>{{ date }}</span>
+                    </div>
+                    <span class='uber-timeline__month'>{{ month }} 2017</span>
+                </div>
+
                 <div class='uber-timeline__pip'></div>
                 {{{ marked copy }}}
             </div>
