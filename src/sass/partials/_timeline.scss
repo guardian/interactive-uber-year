@@ -3,11 +3,11 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    padding-top: 52px;
+    padding-top: 46px;
 }
 
 .uber-timeline__event {
-    margin: 62px 0;
+    margin-bottom: 62px;
 
     .uber-content {
         position: relative;
@@ -16,6 +16,7 @@
     .uber-content:before {
         content: '';
         position: absolute;
+        z-index: 2;
         top: -12px;
         left: 0;
         width: 120px;
@@ -26,6 +27,7 @@
 
 .uber-timeline__day {
     position: absolute;
+    z-index: 5;
     top: 0;
     font-family: 'Guardian Text Sans Web';
     font-size: 16px;
@@ -41,7 +43,6 @@
 
     &.is-fixed {
         position: fixed;
-        z-index: 3;
         top: 6px;
     }
 }
