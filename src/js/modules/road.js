@@ -1,6 +1,6 @@
 var $ = require('../vendor/jquery');
 
-var canvas, W, H, ctx, request, path = [], ubers = [], uber;
+var canvas, W, H, ctx, request, path = [], ubers = [], uberImage;
 
 module.exports = {
     init: function() {
@@ -25,9 +25,12 @@ module.exports = {
     },
 
     loadImage: function() {
-        uber = new Image();
-        uber.onload = this.draw();
-        uber.src = '@@assetPath@@/assets/images/uber.png';
+        uberImage = new Image();
+        uberImage.onload = function() {
+            this.draw();
+            this.updateUber();
+        }.bind(this);
+        uberImage.src = '@@assetPath@@/assets/images/uber.png';
     },
 
     setCanvasSize: function() {
@@ -41,6 +44,8 @@ module.exports = {
         var kinks = H / 100;
             path = [];
             ubers = [];
+            cancelAnimationFrame(request);
+            request = undefined;
 
         path.push({
             x: 60,
@@ -60,8 +65,12 @@ module.exports = {
         for (var i = 0; cars > i; i++) {
             ubers.push({
                 x: path[i * 5].x,
-                y: path[i * 5].y
-            })
+                y: path[i * 5].y,
+                path: i * 5,
+                direction: Math.random() > .5 ? 1 : -1
+            });
+
+            ubers[i] = this.calculateUberPaths(ubers[i]);
         }
     },
 
@@ -76,23 +85,49 @@ module.exports = {
 
         ctx.lineWidth = 14;
         ctx.stroke();
-
-/*
-        for (var i = 0; i < path.length; i++) {
-            if (path[i].junction < 5) {
-                ctx.beginPath();
-                ctx.moveTo(path[i].x, path[i].y);
-                ctx.lineTo(path[i].x - (path[i].junction * 50), path[i].y + (path[i].junction * 100) + 200);
-                ctx.stroke();
-            }
-        }
-*/
     },
 
     drawUber: function() {
         for (var i in ubers) {
-            ctx.drawImage(uber, ubers[i].x - 16, ubers[i].y - 34, 32 , 69);
+            ctx.drawImage(uberImage, ubers[i].x - 16, ubers[i].y - 34, 20 , 43);
         }
+    },
+
+    updateUber: function() {
+        console.log(ubers[2]);
+        for (var i in ubers) {
+            var uber = ubers[i];
+
+            uber.tx = path[uber.path + 1].x - uber.x;
+            uber.ty = path[uber.path + 1].y - uber.y;
+            uber.distance = Math.sqrt(uber.tx*uber.tx + uber.ty*uber.ty);
+            uber.incrementX = (uber.tx / uber.distance) * 4;
+            uber.incrementY = (uber.ty / uber.distance) * 4;
+
+            if (uber.distance < 4) {
+                uber = this.calculateUberPaths(uber);
+            }
+
+            uber.x = uber.x + uber.incrementX;
+            uber.y = uber.y + uber.incrementY;
+
+            ubers[i] = uber;
+        }
+
+        this.draw();
+        request = requestAnimationFrame(this.updateUber.bind(this));
+    },
+
+    calculateUberPaths: function(uber) {
+//         console.log(uber);
+
+        uber.path = uber.path + 1;
+
+        if (uber.path > path.length - 2) {
+            uber.path = 0;
+        }
+
+        return uber;
     },
 
     draw: function() {
