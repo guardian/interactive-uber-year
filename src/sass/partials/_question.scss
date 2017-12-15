@@ -1,0 +1,107 @@
+.mapped-question {
+    position: relative;
+    overflow: hidden;
+    font-family: 'Guardian Egyptian Web';
+    font-weight: 900;
+    font-size: 16px;
+    line-height: 1.1;
+    padding: 6px 6px 0;
+    margin: 4px 0 6px;
+    list-style: none;
+    border: 1px solid $c-grey;
+    color: $c-red;
+    text-decoration: none;
+    background-color: $c-white;
+    box-sizing: border-box;
+
+    &:hover {
+        text-decoration: none;
+        color: $c-black;
+
+        .mapped-question__button {
+            background-color: $c-red;
+            background-position: calc(50% + 2px) center;
+        }
+
+        .mapped-question__image {
+            transform: translateX(4px);
+        }
+    }
+
+    @include mq(mobileLandscape) {
+        margin-bottom: 12px;
+    }
+
+    @include mq(tablet) {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+
+    &:before {
+        content: '';
+        position: absolute;
+        left: -1px;
+        right: -1px;
+        top: -1px;
+        width: calc(100% + 2px);
+        height: 4px;
+        background-color: $c-red;
+    }
+}
+
+.mapped-question__inner {
+    position: relative;
+    padding-bottom: 44%;
+}
+
+.mapped-question__link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 8;
+
+    &:visited {
+        color: $c-grey !important;
+    }
+}
+
+.mapped-question__button {
+    position: absolute;
+    z-index: 6;
+    bottom: 6px;
+    right: 6px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    margin-top: -2px;
+    border-radius: 16px;
+    background-color: $c-black;
+    background-image: url('@@assetPath@@/assets/images/arrow-right.svg');
+    background-repeat: no-repeat;
+    background-size: 90%;
+    background-position: center center;
+    transition: background 0.2s ease-out;
+
+    @include mq(tablet) {
+        width: 30px;
+        height: 30px;
+        border-radius: 16px;
+    }
+}
+
+.mapped-question__image {
+    position: absolute;
+    z-index: 4;
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    width: 100%;
+    transition: transform 0.3s ease-out;
+
+    .is-collapsed & {
+        display: none;
+    }
+}

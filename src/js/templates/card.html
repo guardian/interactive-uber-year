@@ -1,0 +1,48 @@
+<div class='mapped-card' id='{{ handelise question }}' data-type='{{ type }}'>
+    <div class='mapped-card__title'>
+        <img class='mapped-card__title-image' src='@@assetPath@@/assets/images/cards/{{image}}.png' />
+        <h1 class='mapped-card__title-question'>{{ question }}</h1>
+        <span class='mapped-card__last-updated'>Last updated {{ relativeTime lastUpdated }}</span>
+        <a class='mapped-card__title-link is-question' href='#{{ id }}'></a>
+    </div>
+
+    <div class='mapped-card__content'>
+        <div class='mapped-card__body mapped-body'>
+            <div class='mapped-card__copy'>
+                {{{ marked copy }}}
+            </div>
+
+            {{#if_eq type 'connections'}}
+                <svg class='mapped-card__chart mapped-connections' data-chart='{{ title }}' preserveAspectRatio='xMinYMin meet'></svg>
+            {{/if_eq}}
+
+            {{#if_eq type 'bios'}}
+                <div class='mapped-card__chart mapped-bios' data-chart='{{ title }}'></div>
+            {{/if_eq}}
+
+            {{#if_eq type 'timeline'}}
+                <div class='mapped-card__chart mapped-timeline' data-chart='{{ title }}'></div>
+            {{/if_eq}}
+        </div>
+
+        <div class='mapped-card__questions-outer'>
+            <div class='mapped-card__questions'>
+                {{#if relatedQuestion1}}
+                    {{> question question=relatedQuestion1 image=relatedImage1 }}
+                {{/if}}
+
+                {{#if relatedQuestion2}}
+                    {{> question question=relatedQuestion2 image=relatedImage2 }}
+                {{/if}}
+
+                {{#if relatedQuestion3}}
+                    {{> question question=relatedQuestion3 image=relatedImage3 }}
+                {{/if}}
+
+                {{#if relatedQuestion4}}
+                    {{> question question=relatedQuestion4 image=relatedImage4 }}
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</div>
