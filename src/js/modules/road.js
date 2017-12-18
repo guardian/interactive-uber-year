@@ -60,18 +60,19 @@ module.exports = {
             })
         }
 
-        var cars = kinks / 5;
+        var cars = kinks / 3;
 
         for (var i = 0; cars > i; i++) {
             ubers.push({
-                x: path[i * 5].x,
-                y: path[i * 5].y,
-                path: i * 5,
+                x: path[i * 3].x,
+                y: path[i * 3].y,
+                path: i * 3,
                 direction: Math.random() > .5 ? 1 : -1
             });
 
             ubers[i] = this.calculateUberPaths(ubers[i]);
         }
+        console.log(ubers);
     },
 
     drawRoad: function() {
@@ -119,12 +120,22 @@ module.exports = {
     },
 
     calculateUberPaths: function(uber) {
-        uber.path = uber.path + 1;
+        if (uber.direction > 0) {
+            uber.path = uber.path + 1;
+        } else {
+            uber.path = uber.path - 1;
+        }
 
         if (uber.path > path.length - 2) {
             uber.path = 0;
             uber.x = -200;
             uber.y = -200;
+        }
+
+        if (0 > uber.path) {
+            uber.path = path.length - 2;
+            uber.x = path[uber.path - 1].x;
+            uber.y = path[uber.path - 1].y;
         }
 
         return uber;
