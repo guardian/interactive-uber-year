@@ -89,12 +89,11 @@ module.exports = {
 
     drawUber: function() {
         for (var i in ubers) {
-            ctx.drawImage(uberImage, ubers[i].x - 16, ubers[i].y - 34, 20 , 43);
+            this.drawRotatedImage(uberImage, ubers[i].x, ubers[i].y, ubers[i].angle, 20, 43);
         }
     },
 
     updateUber: function() {
-        console.log(ubers[2]);
         for (var i in ubers) {
             var uber = ubers[i];
 
@@ -103,6 +102,7 @@ module.exports = {
             uber.distance = Math.sqrt(uber.tx*uber.tx + uber.ty*uber.ty);
             uber.incrementX = (uber.tx / uber.distance) * 3;
             uber.incrementY = (uber.ty / uber.distance) * 3;
+            uber.angle = Math.atan2(uber.ty, uber.tx) - (270 * Math.PI / 180);
 
             if (uber.distance < 4) {
                 uber = this.calculateUberPaths(uber);
@@ -128,6 +128,14 @@ module.exports = {
         }
 
         return uber;
+    },
+
+    drawRotatedImage: function(image, x, y, angle, width, height) {
+        ctx.save(); 
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.drawImage(image, -(width/2), -(height/2), width, height);
+        ctx.restore(); 
     },
 
     draw: function() {
