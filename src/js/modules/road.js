@@ -89,7 +89,7 @@ module.exports = {
 
     drawUber: function() {
         for (var i in ubers) {
-            this.drawRotatedImage(uberImage, ubers[i].x, ubers[i].y, ubers[i].angle, 20, 43);
+            this.drawRotatedImage(uberImage, ubers[i].x, ubers[i].y, ubers[i].angle, 25, 54);
         }
     },
 
