@@ -109,6 +109,17 @@ module.exports = {
 
         ctx.lineWidth = 14;
         ctx.stroke();
+        ctx.closePath();
+
+        for (var i = 0; i < path.length; i++) {
+            if (path[i].junction < 5) {
+                ctx.beginPath();
+                ctx.moveTo(path[i].x, path[i].y);
+                ctx.lineTo(path[i].x - W, path[i].y - (path[i].junction * 100) + 200);
+                ctx.closePath();
+                ctx.stroke();
+            }
+        }
     },
 
     drawUber: function() {
