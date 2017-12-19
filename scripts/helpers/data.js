@@ -26,21 +26,12 @@ function fetchData(callback) {
     });
 }
 
-function setSheetNames() {
+function setSheetNames(data) {
     data = {
         'events': data[0]
     }
-}
 
-function formatAnswers() {
-    for (var i in data.questions) {
-        if (data.questions[i].text1) {
-            data.questions[i].text1 = '<span>' + data.questions[i].text1.split('.')[0] + '</span>' + data.questions[i].text1.substring(data.questions[i].text1.indexOf('.') + 1);
-        }
-        if (data.questions[i].text2) {
-            data.questions[i].text2 = '<span>' + data.questions[i].text2.split('.')[0] + '</span>' + data.questions[i].text2.substring(data.questions[i].text2.indexOf('.') + 1);
-        }
-    }
+    return data;
 }
 
 module.exports = function getData() {
@@ -48,7 +39,7 @@ module.exports = function getData() {
 
     fetchData(function(result) {
         data = result;
-        setSheetNames();
+        data = setSheetNames(data);
 
         isDone = true;
     });

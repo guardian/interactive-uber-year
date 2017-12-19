@@ -72,6 +72,17 @@ module.exports = {
                 return output;
         });
 
+        handlebars.registerHelper('getImage', function(url, size) {
+            var crop = url.split('?crop=')[1];
+            var url = url.replace('gutools.co.uk', 'guim.co.uk');
+                url = url.replace('http://', 'https://');
+                url = url.replace('images/', '');
+                url = url.split('?')[0];
+                url = url + '/' + crop + '/' + size + '.jpg';
+
+            return url;
+        });
+
         handlebars.registerHelper('if_even', function(conditional, options) {
          if((conditional % 2) == 0) {
            return options.fn(this);

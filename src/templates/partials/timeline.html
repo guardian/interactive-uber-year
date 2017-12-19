@@ -10,7 +10,11 @@
                     <span class='uber-timeline__month'>{{ month }} 2017</span>
                 </div>
 
-                <div class='uber-timeline__pip'></div>
+                {{#if image}}
+                    <img src='{{ getImage image 1000 }}' class='uber-timeline__image' />
+                    <p class='uber-timeline__image-caption'>Source: {{ source }}</p>
+                {{/if}}
+
                 {{{ marked copy }}}
             </div>
         </li>

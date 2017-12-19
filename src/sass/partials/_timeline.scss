@@ -34,18 +34,15 @@
     }
 }
 
-@keyframes grow {
-    0% {
-        transform: scale(0);
-        opacity: 1;
-    }
-    80% {
-        opacity: 1;
-    }
-    100% {
-        opacity: 0;
-        transform: scale(1);
-    }
+.uber-timeline__image {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.uber-timeline__image-caption {
+    font-family: 'Guardian Text Sans Web';
+    font-size: 16px;
+    color: lighten($c-black, 30%);
 }
 
 .uber-timeline__day {
