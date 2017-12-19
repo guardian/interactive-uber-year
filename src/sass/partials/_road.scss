@@ -1,3 +1,15 @@
+.uber-road-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    .gs-container {
+        height: 100%;
+    }
+}
+
 .uber-road {
     position: absolute;
     top: 0;

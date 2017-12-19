@@ -1,5 +1,27 @@
 .uber-intro {
-    padding: 24px 0;
+    position: relative;
+    z-index: 5;
+    padding: 24px 0 0;
+    background-color: $c-pale-blue;
+    margin-bottom: 48px;
+
+    @include mq(leftCol) {
+        background-color: transparent;
+    }
+
+    &:after {
+        content: '';
+        position: absolute;
+        bottom: -48px;
+        left: 0;
+        right: 0;
+        height: 48px;
+        background: linear-gradient(180deg, $c-pale-blue, rgba($c-pale-blue, 0));
+
+        @include mq(leftCol) {
+            background: none;
+        }
+    }
 
     p {
         font-family: 'Guardian Text Egyptian Web';

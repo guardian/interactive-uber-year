@@ -1,5 +1,12 @@
 .uber-header {
+    position: relative;
+    z-index: 6;
     padding: 6px 0;
+    background-color: $c-pale-blue;
+
+    @include mq(wide) {
+        background-color: transparent;
+    }
 }
 
 .uber-header__title {
