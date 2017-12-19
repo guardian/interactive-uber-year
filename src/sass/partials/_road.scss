@@ -1,0 +1,16 @@
+.uber-road {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    height: 100%;
+    width: 60px;
+
+    @include mq(leftCol) {
+        width: 140px;
+    }
+
+    @include mq(wide) {
+        width: 220px;
+    }
+}

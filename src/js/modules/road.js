@@ -13,11 +13,12 @@ module.exports = {
             this.setCanvasSize();
             this.calculateElements();
             this.draw();
+            this.updateUber();
         }.bind(this))
     },
 
     createCanvas: function() {
-        canvas = document.getElementsByClassName('uber-timeline__road')[0];
+        canvas = document.getElementsByClassName('uber-road')[0];
         this.setCanvasSize();
         this.calculateElements();
         ctx = canvas.getContext('2d');
@@ -34,8 +35,8 @@ module.exports = {
     },
 
     setCanvasSize: function() {
-        W = $('.uber-timeline__road').width();
-        H = $('.uber-timeline__road').height();
+        W = $('.uber-road').width();
+        H = $('.uber-road').height();
         canvas.width = W;
         canvas.height = H;
     },
@@ -54,7 +55,7 @@ module.exports = {
 
         for (var i = 0; kinks > i; i++) {
             path.push({
-                x: Math.floor(Math.random() * (120 - 20)) + 20,
+                x: Math.floor(Math.random() * ((W - 14) - (W - 50))) + (W - 50),
                 y: path[i].y + Math.floor(Math.random() * (300 - 100)) + 100,
                 junction: Math.floor(Math.random() * 20 - 1) + 1
             })
@@ -72,7 +73,6 @@ module.exports = {
 
             ubers[i] = this.calculateUberPaths(ubers[i]);
         }
-        console.log(ubers);
     },
 
     drawRoad: function() {
