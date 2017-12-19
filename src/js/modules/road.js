@@ -144,11 +144,12 @@ module.exports = {
         }
     },
 
-    animate: function() {
-        this.updateUber();
-        this.updateLocators();
-        this.draw();
-        request = requestAnimationFrame(this.animate.bind(this));
+    drawRotatedImage: function(image, x, y, angle, width, height) {
+        ctx.save(); 
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.drawImage(image, -(width/2), -(height/2), width, height);
+        ctx.restore(); 
     },
 
     updateLocators: function() {
@@ -202,12 +203,11 @@ module.exports = {
         return uber;
     },
 
-    drawRotatedImage: function(image, x, y, angle, width, height) {
-        ctx.save(); 
-        ctx.translate(x, y);
-        ctx.rotate(angle);
-        ctx.drawImage(image, -(width/2), -(height/2), width, height);
-        ctx.restore(); 
+    animate: function() {
+        this.updateUber();
+        this.updateLocators();
+        this.draw();
+        request = requestAnimationFrame(this.animate.bind(this));
     },
 
     draw: function() {
