@@ -50,7 +50,7 @@ module.exports = {
             request = undefined;
 
         path.push({
-            x: 60,
+            x: W / 2,
             y: 0
         })
 
