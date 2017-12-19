@@ -49,6 +49,8 @@
 }
 
 .uber-timeline__pip {
+    display: block;
+    display: none; // temp line to see if I can change to canvas
     position: absolute;
     left: -40px;
     top: 13px;
@@ -56,7 +58,6 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    display: block;
 
     &:before {
         content: '';

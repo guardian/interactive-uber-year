@@ -1,6 +1,6 @@
 var $ = require('../vendor/jquery');
 
-var canvas, W, H, ctx, request, path = [], ubers = [], uberImage;
+var canvas, W, H, ctx, request, path = [], ubers = [], locators = [], uberImage;
 
 module.exports = {
     init: function() {
@@ -13,7 +13,7 @@ module.exports = {
             this.setCanvasSize();
             this.calculateElements();
             this.draw();
-            this.updateUber();
+            this.animate();
         }.bind(this))
     },
 
@@ -29,7 +29,7 @@ module.exports = {
         uberImage = new Image();
         uberImage.onload = function() {
             this.draw();
-            this.updateUber();
+            this.animate();
         }.bind(this);
         uberImage.src = '@@assetPath@@/assets/images/uber.png';
     },
@@ -45,6 +45,7 @@ module.exports = {
         var kinks = H / 100;
             path = [];
             ubers = [];
+            locators = [];
             cancelAnimationFrame(request);
             request = undefined;
 
@@ -73,6 +74,28 @@ module.exports = {
 
             ubers[i] = this.calculateUberPaths(ubers[i]);
         }
+
+        $('.uber-timeline__day').each(function(i, el) {
+            var y = $(el).offset().top - 30;
+            locators.push({
+                x: this.getPointOnRoad(y),
+                y: y,
+                radarSize: 0,
+                opacity: 0.4
+            })
+        }.bind(this));
+    },
+
+    getPointOnRoad: function(y) {
+        for (var i in path) {
+            if (path[i].y > y) {
+                var above = path[i - 1];
+                var below = path[i];
+                var angle = (below.x - above.x) / (below.y - above.y);
+
+                return angle * y + (above.x - angle * above.y);
+            }
+        }
     },
 
     drawRoad: function() {
@@ -91,6 +114,36 @@ module.exports = {
     drawUber: function() {
         for (var i in ubers) {
             this.drawRotatedImage(uberImage, ubers[i].x, ubers[i].y, ubers[i].angle, 25, 54);
+        }
+    },
+
+    drawLocators: function() {
+        for (var i in locators) {
+            ctx.beginPath();
+            ctx.ellipse(locators[i].x, locators[i].y, locators[i].radarSize, locators[i].radarSize, 0, 0, 2 * Math.PI);
+            ctx.fillStyle = 'rgba(75, 198, 223, ' + locators[i].opacity + ')';
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.ellipse(locators[i].x, locators[i].y, 4, 4, 0, 0, 2 * Math.PI);
+            ctx.fillStyle = '#4bc6df';
+            ctx.closePath();
+            ctx.fill();
+        }
+    },
+
+    animate: function() {
+        this.updateUber();
+        this.updateLocators();
+        this.draw();
+        request = requestAnimationFrame(this.animate.bind(this));
+    },
+
+    updateLocators: function() {
+        for (var i in locators) {
+            locators[i].radarSize = locators[i].radarSize > 20 ? 0 : locators[i].radarSize + 0.25;
+            locators[i].opacity = locators[i].radarSize > 16 ? locators[i].opacity - 0.025 : 0.4;
         }
     },
 
@@ -114,9 +167,6 @@ module.exports = {
 
             ubers[i] = uber;
         }
-
-        this.draw();
-        request = requestAnimationFrame(this.updateUber.bind(this));
     },
 
     calculateUberPaths: function(uber) {
@@ -153,5 +203,6 @@ module.exports = {
         ctx.clearRect(0, 0, W, H);
         this.drawRoad();
         this.drawUber();
+        this.drawLocators();
     }
 }
