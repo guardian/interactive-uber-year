@@ -1,6 +1,6 @@
 var $ = require('../vendor/jquery');
 
-var canvas, W, H, ctx, request, path = [], ubers = [], locators = [], uberImage;
+var canvas, W, H, ctx, request, path = [], ubers = [], locators = [], spinningUber = [], uberImage;
 
 module.exports = {
     init: function() {
@@ -46,6 +46,7 @@ module.exports = {
             path = [];
             ubers = [];
             locators = [];
+            spinningUber = [];
             cancelAnimationFrame(request);
             request = undefined;
 
@@ -84,6 +85,17 @@ module.exports = {
                 opacity: 0.4
             })
         }.bind(this));
+
+        var spinningUberY = [5, 17, 28, 42];
+
+        for (var i = 0; i < spinningUberY.length; i++) {
+            spinningUber.push({
+                x: W / 5,
+                y: path[spinningUberY[i]].y,
+                r: 0
+            })
+        }
+        console.log(spinningUber);
     },
 
     getPointOnRoad: function(y) {
@@ -144,6 +156,12 @@ module.exports = {
         }
     },
 
+    drawSpinningUber: function() {
+        for (var i in spinningUber) {
+            this.drawRotatedImage(uberImage, spinningUber[i].x, spinningUber[i].y, spinningUber[i].r, 25, 54)
+        }
+    },
+
     drawRotatedImage: function(image, x, y, angle, width, height) {
         ctx.save(); 
         ctx.translate(x, y);
@@ -181,6 +199,12 @@ module.exports = {
         }
     },
 
+    updateSpinningUber: function() {
+        for (var i in spinningUber) {
+            spinningUber[i].r = spinningUber[i].r > 6.283 ? 0 : spinningUber[i].r + 0.15;
+        }
+    },
+
     calculateUberPaths: function(uber) {
         if (uber.direction > 0) {
             uber.path = uber.path + 1;
@@ -206,6 +230,7 @@ module.exports = {
     animate: function() {
         this.updateUber();
         this.updateLocators();
+        this.updateSpinningUber();
         this.draw();
         request = requestAnimationFrame(this.animate.bind(this));
     },
@@ -215,5 +240,6 @@ module.exports = {
         this.drawRoad();
         this.drawUber();
         this.drawLocators();
+        this.drawSpinningUber();
     }
 }
