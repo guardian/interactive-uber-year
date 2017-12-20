@@ -1,6 +1,6 @@
 var $ = require('../vendor/jquery');
 
-var canvas, W, H, ctx, request, path = [], ubers = [], locators = [], spinningUber = [], uberImage;
+var canvas, W, H, ctx, request, path = [], ubers = [], locators = [], spinningUber = [], smokingUbers = [], uberImage;
 
 module.exports = {
     init: function() {
@@ -47,6 +47,7 @@ module.exports = {
             ubers = [];
             locators = [];
             spinningUber = [];
+            smokingUbers = [];
             cancelAnimationFrame(request);
             request = undefined;
 
@@ -95,7 +96,16 @@ module.exports = {
                 r: 0
             })
         }
-        console.log(spinningUber);
+
+        smokingUbers.push({
+            x: W / 4,
+            y: locators[22].y + 80,
+            smoke: []
+        });
+
+        for (var i = 0; i < 9; i++) {
+            smokingUbers[0].smoke.push(this.generateSmoke(i));
+        }
     },
 
     getPointOnRoad: function(y) {
@@ -107,6 +117,15 @@ module.exports = {
 
                 return angle * y + (above.x - angle * above.y);
             }
+        }
+    },
+
+    generateSmoke: function(i) {
+        return {
+            x: Math.floor(Math.random() * 4) - 2,
+            y: i * 4,
+            radius: i * 2.5,
+            opacity: 0.5
         }
     },
 
@@ -124,7 +143,7 @@ module.exports = {
         ctx.closePath();
 
         for (var i = 0; i < path.length; i++) {
-            if (path[i].junction < 5) {
+            if (path[i].junction < 8) {
                 ctx.beginPath();
                 ctx.moveTo(path[i].x, path[i].y);
                 ctx.lineTo(path[i].x - W, path[i].y - (path[i].junction * 100) + 200);
@@ -159,6 +178,22 @@ module.exports = {
     drawSpinningUber: function() {
         for (var i in spinningUber) {
             this.drawRotatedImage(uberImage, spinningUber[i].x, spinningUber[i].y, spinningUber[i].r, 25, 54)
+        }
+    },
+
+    drawSmokingUber: function() {
+        for (var i in smokingUbers) {
+            var uber = smokingUbers[i];
+            this.drawRotatedImage(uberImage, uber.x, uber.y, 1.2, 25, 54);
+
+            for (var s in uber.smoke) {
+                var smoke = uber.smoke[s]
+                ctx.beginPath();
+                ctx.ellipse(uber.x + smoke.x + 20, uber.y - 14 - smoke.y, smoke.radius, smoke.radius, 0, 0, 2 * Math.PI);
+                ctx.fillStyle = 'rgba(200, 200, 200, ' + smoke.opacity + ')';
+                ctx.closePath();
+                ctx.fill();
+            }
         }
     },
 
@@ -205,6 +240,28 @@ module.exports = {
         }
     },
 
+    updateSmokingUber: function() {
+        for (var i in smokingUbers) {
+            for (var s in smokingUbers[i].smoke) {
+                var smoke = smokingUbers[i].smoke[s];
+
+                if (smoke.y > 40) {
+                    smoke.y = 4;
+                    smoke.x = Math.floor(Math.random() * 4) - 2;
+                    smoke.opacity = 0.5;
+                    smoke.radius = 5;
+                } else {
+                    smoke.y = smoke.y + 0.5;
+                    smoke.x = smoke.x + (Math.random() > .5 ? 0.3 : -.3);
+                    smoke.opacity = smoke.opacity - .00625;
+                    smoke.radius = smoke.radius + 0.25; 
+                }
+
+                smokingUbers[i].smoke[s] = smoke;
+            }
+        }
+    },
+
     calculateUberPaths: function(uber) {
         if (uber.direction > 0) {
             uber.path = uber.path + 1;
@@ -231,6 +288,7 @@ module.exports = {
         this.updateUber();
         this.updateLocators();
         this.updateSpinningUber();
+        this.updateSmokingUber();
         this.draw();
         request = requestAnimationFrame(this.animate.bind(this));
     },
@@ -241,5 +299,6 @@ module.exports = {
         this.drawUber();
         this.drawLocators();
         this.drawSpinningUber();
+        this.drawSmokingUber();
     }
 }
