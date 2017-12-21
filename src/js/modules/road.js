@@ -1,11 +1,44 @@
 var $ = require('../vendor/jquery');
+var fontSpy = require('../vendor/jquery.fontspy.js').fontSpy;
 
 var canvas, W, H, ctx, request, path = [], ubers = [], locators = [], spinningUber = [], smokingUbers = [], uberImage;
 
 module.exports = {
     init: function() {
-        this.createCanvas();
-        this.bindings();
+        this.waitForFontsToLoad();
+    },
+
+    waitForFontsToLoad: function() {
+        var fontsLoaded = 0;
+
+        fontSpy('Guardian Egyptian Web', {
+            success: function() {
+                fontsLoaded++;
+            }
+        });
+
+        fontSpy('Guardian Text Egyptian Web', {
+            success: function() {
+                fontsLoaded++;
+            }
+        });
+
+        fontSpy('Guardian Text Sans Web', {
+            success: function() {
+                fontsLoaded++;
+            }
+        });
+
+        var interval;
+
+        interval = setInterval(function() {
+            if (fontsLoaded === 3) {
+                this.createCanvas();
+                this.bindings();
+                clearInterval(interval);
+            } else {
+            }
+        }.bind(this), 200);
     },
 
     bindings: function() {
@@ -97,14 +130,14 @@ module.exports = {
             })
         }
 
-        smokingUbers.push({
-            x: W / 4,
-            y: locators[22].y + 80,
-            smoke: []
-        });
+        var smokingUberY = [7, 22];
 
-        for (var i = 0; i < 9; i++) {
-            smokingUbers[0].smoke.push(this.generateSmoke(i));
+        for (var i = 0; i < smokingUberY.length; i++) {
+            smokingUbers.push({
+                x: W / 4,
+                y: locators[smokingUberY[i]].y + 80,
+                smoke: this.generateSmoke()
+            });
         }
     },
 
@@ -121,12 +154,17 @@ module.exports = {
     },
 
     generateSmoke: function(i) {
-        return {
-            x: Math.floor(Math.random() * 4) - 2,
-            y: i * 4,
-            radius: i * 2.5,
-            opacity: 0.5
+        var smoke = [];
+
+        for (var i = 0; i < 9; i++) {
+            smoke.push({
+                x: Math.floor(Math.random() * 4) - 2,
+                y: i * 6,
+                radius: i * 3.75,
+                opacity: 0.5
+            });
         }
+        return smoke;
     },
 
     drawRoad: function() {
@@ -189,7 +227,7 @@ module.exports = {
             for (var s in uber.smoke) {
                 var smoke = uber.smoke[s]
                 ctx.beginPath();
-                ctx.ellipse(uber.x + smoke.x + 20, uber.y - 14 - smoke.y, smoke.radius, smoke.radius, 0, 0, 2 * Math.PI);
+                ctx.ellipse(uber.x + smoke.x + 20, uber.y - 10 - smoke.y, smoke.radius, smoke.radius, 0, 0, 2 * Math.PI);
                 ctx.fillStyle = 'rgba(200, 200, 200, ' + smoke.opacity + ')';
                 ctx.closePath();
                 ctx.fill();
@@ -245,7 +283,7 @@ module.exports = {
             for (var s in smokingUbers[i].smoke) {
                 var smoke = smokingUbers[i].smoke[s];
 
-                if (smoke.y > 40) {
+                if (smoke.y > 60) {
                     smoke.y = 4;
                     smoke.x = Math.floor(Math.random() * 4) - 2;
                     smoke.opacity = 0.5;
@@ -254,7 +292,7 @@ module.exports = {
                     smoke.y = smoke.y + 0.5;
                     smoke.x = smoke.x + (Math.random() > .5 ? 0.3 : -.3);
                     smoke.opacity = smoke.opacity - .00625;
-                    smoke.radius = smoke.radius + 0.25; 
+                    smoke.radius = smoke.radius + .458333333; 
                 }
 
                 smokingUbers[i].smoke[s] = smoke;
