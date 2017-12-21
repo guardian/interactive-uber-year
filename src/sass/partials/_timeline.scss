@@ -34,9 +34,22 @@
     }
 }
 
-.uber-timeline__image {
+.uber-timeline__image-wrapper {
+    position: relative;
+    height: 0;
     width: 100%;
+    padding-top: 60%;
     margin-top: 12px;
+    background-color: darken($c-pale-blue, 5%);
+}
+
+.uber-timeline__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
 }
 
 .uber-timeline__image-caption {
