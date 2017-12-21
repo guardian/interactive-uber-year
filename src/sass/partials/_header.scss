@@ -4,7 +4,7 @@
     padding: 6px 0;
     background-color: $c-pale-blue;
 
-    @include mq(wide) {
+    @include mq(leftCol) {
         background-color: transparent;
     }
 }
