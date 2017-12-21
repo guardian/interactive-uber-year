@@ -1,6 +1,7 @@
 .uber-header {
     position: relative;
     z-index: 6;
+    margin: 0;
     padding: 6px 0;
     background-color: $c-pale-blue;
 
@@ -13,13 +14,9 @@
     font-family: 'Guardian Egyptian Web';
     font-weight: 200;
     color: $c-black;
-    font-size: 28px;
-    line-height: 1.2;
-
-    @include mq(tablet) {
-        font-size: 32px;
-        line-height: 1.1;
-    }
+    font-size: 32px;
+    line-height: 1.1;
+    margin: 0;
 
     @include mq(desktop) {
         font-size: 64px;
@@ -32,7 +29,7 @@
     color: $c-black;
     font-size: 16px;
     line-height: 1.2;
-    margin: 4px 0;
+    margin: 4px 0 6px;
 
     @include mq(tablet) {
         margin: 12px 0;
