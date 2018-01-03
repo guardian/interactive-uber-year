@@ -110,7 +110,7 @@ module.exports = {
             ubers[i] = this.calculateUberPaths(ubers[i]);
         }
 
-        var locatorOffset = $('#header').length ? $('#header').outerHeight() - 16 : -16;
+        var locatorOffset = $('#bannerandheader').length ? $('#bannerandheader').outerHeight() - 16 : -16;
 
         $('.uber-timeline__day').each(function(i, el) {
             var y = $(el).offset().top - locatorOffset;
